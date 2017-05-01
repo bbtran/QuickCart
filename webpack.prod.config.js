@@ -8,7 +8,7 @@ const PATHS = {
   style: [path.resolve(__dirname, './styles')],
 };
 
-const VENDOR_LIBS = ['react-hot-loader/patch', 'lodash', 'react', 'react-dom', 'redux', 'react-router', 'react-router-bootstrap', 'react-redux', 'react-router-redux'];
+const VENDOR_LIBS = ['react-hot-loader/patch', 'lodash', 'react', 'react-dom', 'redux', 'react-router', 'react-redux', 'react-router-redux'];
 
 module.exports = {
   entry: {
