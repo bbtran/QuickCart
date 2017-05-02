@@ -1,24 +1,31 @@
 const express = require('express');
 const path = require('path');
-const faker = require('faker');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const MONGO_URI = process.env.MONGO_URI || require('./server/config').MONGO_URI;
+
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
 const port = process.env.PORT || 3000;
 app.set('port', port);
 
-const PRODUCT_COUNT = 10;
-const products = [];
-for (let i = 0; i < PRODUCT_COUNT; i++) {
-  products.push({
-    id: faker.random.uuid(),
-    name: faker.commerce.productName(),
-    price: faker.commerce.price(),
-    image: faker.image.image(),
-    description: faker.lorem.sentence(),
-  });
-}
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
-console.log('Products:', JSON.stringify(products, null, 2));
+// On server start, clear inventory collection and add 10 new products
+// mongoHandlers.generateInventory();
+
+// mongoHandlers.addOrRemoveFromCart('', 'ADD', (item) => {
+//   console.log(item);
+// });
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -38,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(webpackHotMiddleware(webpack(webpackConfig)));
 }
 
+mongoose.connect(MONGO_URI);
 app.listen(port, (error) => {
   if (error) {
     console.log(error);
