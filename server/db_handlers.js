@@ -12,12 +12,12 @@ handlers.generateInventory = () => {
   Inventory.remove({}, (error) => {
     if (error) throw error;
     const PRODUCT_COUNT = 10;
-    for (let i = 0; i < PRODUCT_COUNT; i++) {
+    for (let i = 1; i <= PRODUCT_COUNT; i++) {
       const product = {
         _id: faker.random.uuid(),
         name: faker.commerce.productName(),
         price: faker.commerce.price(),
-        image: faker.image.image(),
+        image: faker.image.image() + `/${i}`, // designate a unique image to each item
         description: faker.lorem.sentence(),
       };
       const newProduct = new Inventory(product);
@@ -64,7 +64,7 @@ handlers.addOrRemoveFromCart = (id, addOrRemove, callback) => {
 // Remove all exiting items from CartItems collection
 handlers.removeAllFromCart = (callback) => {
   CartItem.find({}, (error, results) => {
-    results.forEach(item, () => {
+    results.forEach((item) => {
       const product = {
         _id: item._id,
         name: item.name,
@@ -81,6 +81,20 @@ handlers.removeAllFromCart = (callback) => {
         });
       });
     });
+  });
+};
+
+handlers.getInventory = (callback) => {
+  Inventory.find({}, (error, productList) => {
+    if (error) throw error;
+    callback(productList);
+  });
+};
+
+handlers.getCart = (callback) => {
+  CartItem.find({}, (error, cartItems) => {
+    if (error) throw error;
+    callback(cartItems);
   });
 };
 

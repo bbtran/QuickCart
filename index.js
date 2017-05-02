@@ -1,13 +1,10 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MONGO_URI = process.env.MONGO_URI || require('./server/config').MONGO_URI;
 
-
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
+
 
 const port = process.env.PORT || 3000;
 app.set('port', port);
@@ -20,15 +17,16 @@ app.use((req, res, next) => {
   next();
 });
 
+const routes = require('./server/request_handlers');
+routes(app);
+
+const mongoHandlers = require('./server/db_handlers');
 // On server start, clear inventory collection and add 10 new products
 // mongoHandlers.generateInventory();
-
-// mongoHandlers.addOrRemoveFromCart('', 'ADD', (item) => {
-//   console.log(item);
-// });
-
+// mongoHandlers.removeAllFromCart();
 
 if (process.env.NODE_ENV === 'production') {
+  console.log('IN PRODUCTION');
   app.use(express.static(path.join(__dirname, 'dist')));
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
