@@ -61,5 +61,14 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './dist',
     hot: true,
+    proxy: {
+      '/api/*': {
+        target: {
+          host: 'localhost',
+          protocol: 'http:',
+          port: 3000,
+        }
+      }
+    }
   },
 };
