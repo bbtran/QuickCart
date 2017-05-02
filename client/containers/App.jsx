@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+
+import Navbar from '../components/Navbar';
+import ProductsList from './ProductsList';
+import Cart from './Cart';
 
 // import * as actions from '../actions';
 // import '../../styles/base.scss';
@@ -9,14 +12,14 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <nav className="navbar">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <a href="/"><h1>QuickCart</h1></a>
-              HELLO WORLD
-            </div>
+        <Navbar />
+        <div className="router">
+          <Switch>
+            <Route exact path="/" component={ProductsList} />
+            <Route path="/products" component={ProductsList} />
+            <Route path="/cart" component={Cart} />
+          </Switch>
           </div>
-        </nav>
       </div>
     );
   }
