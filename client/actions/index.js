@@ -42,12 +42,12 @@ export function removeFromCart(itemId) {
 }
 
 export function addToCart(itemId) {
-  const url = `api/add?${itemId}`;
+  const url = `http://localhost:3000/api/add?${itemId}`;
   console.log('add url', url);
   const request = axios.post(url);
   return (dispath) => {
     request.then(({ data }) => {
-      console.log(data);
+      console.log('data in addtocart:', data);
       dispath({ type: ADD_ITEM_TO_CART, payload: data });
     }).then(() => {
       console.log('in here');
