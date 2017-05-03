@@ -1,8 +1,13 @@
 const url = require('url');
-
 const database = require('./db_handlers');
 
 module.exports = (app) => {
+  // Retrieve all items from inventory collection
+  app.get('/api/products', (req, res) => {
+    database.getInventory((productList) => {
+      res.status(200).send(JSON.stringify(productList));
+    });
+  });
 
   // Retrieve all items in cart collection
   app.get('/api/cart', (req, res) => {
@@ -13,7 +18,7 @@ module.exports = (app) => {
 
   // Add item to cart
   app.post('/api/add?', (req, res) => {
-    console.log(url);
+    console.log(url.parse(req.url));
     const itemId = url.parse(req.url).query;
     if (itemId) {
       database.addOrRemoveFromCart(itemId, 'ADD', (item) => {
@@ -39,12 +44,19 @@ module.exports = (app) => {
     }
   });
 
-  // Checkout
+  // Checkout and start over with new products in Inventory
+  app.get('/api/checkout', (req, res) => {
+    database.checkOut().then(() => {
+      database.generateInventory();
+    }).then(() => {
+      res.send('Success!');
+    });
+  });
 
-  // Retrieve all items from inventory collection
-  app.get('/api/products', (req, res) => {
-    database.getInventory((productList) => {
-      res.status(200).send(JSON.stringify(productList));
+  // Remove all items from Cart
+  app.get('/api/removeAll', (req, res) => {
+    database.removeAllFromCart().then(() => {
+      res.send('Success!');
     });
   });
 };

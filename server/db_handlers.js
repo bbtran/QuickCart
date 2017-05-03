@@ -62,7 +62,7 @@ handlers.addOrRemoveFromCart = (id, addOrRemove, callback) => {
 };
 
 // Remove all exiting items from CartItems collection
-handlers.removeAllFromCart = (callback) => {
+handlers.removeAllFromCart = () => {
   CartItem.find({}, (error, results) => {
     results.forEach((item) => {
       const product = {
@@ -84,6 +84,7 @@ handlers.removeAllFromCart = (callback) => {
   });
 };
 
+// Fetch all items in Inventory
 handlers.getInventory = (callback) => {
   Inventory.find({}, (error, productList) => {
     if (error) throw error;
@@ -91,10 +92,22 @@ handlers.getInventory = (callback) => {
   });
 };
 
+// Fetch all items in Cart
 handlers.getCart = (callback) => {
   CartItem.find({}, (error, cartItems) => {
     if (error) throw error;
     callback(cartItems);
+  });
+};
+
+// Clear out Cart as well as Inventory
+handlers.checkOut = () => {
+  CartItem.remove({}, (error) => {
+    if (error) throw error;
+  }).then(() => {
+    Inventory.remove({}, (error) => {
+      if (error) throw error;
+    });
   });
 };
 
