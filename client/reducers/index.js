@@ -30,7 +30,6 @@ function cartReducer(state = [], action) {
 
 function addToList(prevState, action) {
   const newState = [...prevState, action.payload];
-  console.log('newState:', newState);
   return newState;
 }
 
@@ -38,7 +37,6 @@ function removeFromList(prevState, action) {
   const copiedState = [...prevState];
   let index;
   for (let i = 0; i < copiedState.length; i++) {
-    console.log('in reducer', action.payload);
     if (copiedState[i]._id === action.payload) {
       index = i;
     }
