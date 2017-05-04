@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
 
@@ -11,10 +11,10 @@ class ProductDetail extends Component {
       inCart: false,
       item: {},
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleAddClick = this.handleAddClick.bind(this);
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
   }
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.productsList.forEach((prod) => {
       if (prod._id === this.props.match.params.itemId) {
         this.setState({
@@ -34,13 +34,22 @@ class ProductDetail extends Component {
       });
     }
   }
-  handleClick(e) {
+
+  handleAddClick(e) {
     e.preventDefault();
-    this.props.addToCart(this.state.item._id);
     this.setState({ inCart: true });
+    this.props.addToCart(this.state.item._id);
+  }
+
+  handleRemoveClick(e) {
+    e.preventDefault();
+    this.setState({ inCart: false });
+    this.props.removeFromCart(this.state.item._id);
   }
 
   render() {
+    const showViewLink = <div><Link to="/cart">View item in cart!</Link> or <button className="add-to-cart" onClick={this.handleRemoveClick}>Remove from Cart</button></div>;
+    const price = 'Price: $' + this.state.item.price + '.00';
     return (
       <div className="product-detail">
         <div className="item-image">
@@ -48,11 +57,11 @@ class ProductDetail extends Component {
         </div>
         <div className="item-info">
           <h2>{this.state.item.name}</h2>
-          <h4>Price: ${this.state.item.price}</h4>
+          <h4>{price}</h4>
           <p>{this.state.item.description}</p>
           <div className="call-to-action">
             {/* If the item is in cart, provide a link to the cart, else display add to cart buttom */}
-            {this.state.inCart === true ? <Link to="/cart">View item in cart!</Link> : <button className="add-to-cart" onClick={this.handleClick}>ADD TO CART</button>}
+            {this.state.inCart === true ? showViewLink : <button className="add-to-cart" onClick={this.handleAddClick}>Add to Cart</button>}
           </div>
         </div>
       </div>
@@ -69,6 +78,7 @@ ProductDetail.propTypes = {
   productsList: PropTypes.array,
   cartList: PropTypes.array,
   addToCart: PropTypes.func,
+  removeFromCart: PropTypes.func,
 };
 
-export default connect(mapStateToProps, actions)(ProductDetail);
+export default withRouter(connect(mapStateToProps, actions)(ProductDetail));

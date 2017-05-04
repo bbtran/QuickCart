@@ -5,8 +5,7 @@ import Navbar from '../components/Navbar';
 import ProductsList from './ProductsList';
 import Cart from './Cart';
 
-// import * as actions from '../actions';
-// import '../../styles/base.scss';
+import '../../styles/base.scss';
 
 class App extends Component {
   render() {
