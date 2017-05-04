@@ -23,7 +23,7 @@ routes(app);
 const mongoHandlers = require('./server/db_handlers');
 
 // On server start, clear inventory collection and add 10 new products
-// mongoHandlers.generateInventory();
+mongoHandlers.generateInventory();
 
 
 if (process.env.NODE_ENV === 'production') {

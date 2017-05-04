@@ -11,7 +11,7 @@ handlers = {};
 handlers.generateInventory = () => {
   Inventory.remove({}, (error) => {
     if (error) throw error;
-    const PRODUCT_COUNT = 10;
+    const PRODUCT_COUNT = 12;
     for (let i = 1; i <= PRODUCT_COUNT; i++) {
       const product = {
         _id: faker.random.uuid(),
@@ -61,8 +61,24 @@ handlers.addOrRemoveFromCart = (id, addOrRemove, callback) => {
   });
 };
 
-// Remove all exiting items from CartItems collection
-handlers.removeAllFromCart = () => {
+// Fetch all items in Inventory
+handlers.getInventory = (callback) => {
+  Inventory.find({}, (error, productList) => {
+    if (error) throw error;
+    callback(productList);
+  });
+};
+
+// Fetch all items in Cart
+handlers.getCart = (callback) => {
+  CartItem.find({}, (error, cartItems) => {
+    if (error) throw error;
+    callback(cartItems);
+  });
+};
+
+// Checkout: Remove all exiting items from CartItems collection
+handlers.checkout = (callback) => {
   CartItem.find({}, (error, results) => {
     results.forEach((item) => {
       const product = {
@@ -81,33 +97,8 @@ handlers.removeAllFromCart = () => {
         });
       });
     });
-  });
-};
-
-// Fetch all items in Inventory
-handlers.getInventory = (callback) => {
-  Inventory.find({}, (error, productList) => {
-    if (error) throw error;
-    callback(productList);
-  });
-};
-
-// Fetch all items in Cart
-handlers.getCart = (callback) => {
-  CartItem.find({}, (error, cartItems) => {
-    if (error) throw error;
-    callback(cartItems);
-  });
-};
-
-// Clear out Cart as well as Inventory
-handlers.checkOut = () => {
-  CartItem.remove({}, (error) => {
-    if (error) throw error;
   }).then(() => {
-    Inventory.remove({}, (error) => {
-      if (error) throw error;
-    });
+    callback();
   });
 };
 

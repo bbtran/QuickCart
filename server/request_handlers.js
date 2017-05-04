@@ -44,18 +44,9 @@ module.exports = (app) => {
     }
   });
 
-  // Checkout and start over with new products in Inventory
+  // Checkout
   app.get('/api/checkout', (req, res) => {
-    database.checkOut().then(() => {
-      database.generateInventory();
-    }).then(() => {
-      res.send('Success!');
-    });
-  });
-
-  // Remove all items from Cart
-  app.get('/api/removeAll', (req, res) => {
-    database.removeAllFromCart().then(() => {
+    database.checkout(() => {
       res.send('Success!');
     });
   });
