@@ -6,7 +6,7 @@ A quick and easy shopping cart for scalable use.
 # Tech Stack
 ## Frontend
 * [React](https://facebook.github.io/react/)-[Redux](https://github.com/reactjs/redux) - JS libraries for rendering page views and maintaining state
-* [React Router v4] (https://github.com/ReactTraining/react-router) - Routing library for React applications, enabling URL for specific views
+* [React Router v4](https://github.com/ReactTraining/react-router) - Routing library for React applications, enabling URL for specific views
 * [Bootstrap](http://getbootstrap.com/) - mobile first styling framework
 * [SASS/SCSS](http://sass-lang.com/) - CSS preprocessor
 
