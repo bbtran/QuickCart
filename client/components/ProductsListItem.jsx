@@ -15,13 +15,17 @@ export default class ProductListItem extends Component {
   }
 
   render() {
+    const price = '$' + this.props.price.toFixed(2);
     return (
       <div className={this.state.class}>
         <div className="product-image">
           <img src={this.props.image} alt="productImg" />
         </div>
-        <div className="product-name">
-          {this.props.name}
+        <div className="product-info">
+          <div className="product-name">
+            {this.props.name}
+          </div>
+          {this.props.cart ? <div className="price-header"> <span>Price</span><div className="product-price"> {price}</div></div> : <div className="product-price">{price}</div> }
         </div>
       </div>
     );
@@ -32,4 +36,5 @@ ProductListItem.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   cart: PropTypes.bool,
+  price: PropTypes.number,
 };
