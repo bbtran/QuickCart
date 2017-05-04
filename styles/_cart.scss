@@ -1,0 +1,115 @@
+.cart-container {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  .cart-content {
+    width: 100%;
+    @include transition-all;
+    @include sans-serif-font;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+      @include tablet {
+        font-size: 22px;
+      }
+    }
+    ul.cart-list {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-flow: row wrap;
+      list-style-type: none;
+      -webkit-margin-start: 0px;
+      -webkit-margin-end: 0px;
+      -webkit-padding-start: 0;
+      li {
+        border: 2px solid $gray-base;
+        padding: 10px 10px;
+        margin: 5px 0;
+        width: 90%;
+        .cart-list-item {
+          display: flex;
+          flex-direction: row;
+          .product-image {
+            width: 40%;
+            img {
+              width: 50%;
+              float: left;
+            }
+          }
+          .product-info {
+            color: $text-default;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 60%;
+            .product-name {
+              align-self: flex-start;
+              margin-right: auto;
+              font-size: 16px;
+              @include sans-serif-font;
+            }
+            .price-header {
+              margin-left: auto;
+              display: flex;
+              justify-content: flex-start;
+              flex-flow: row-reverse wrap;
+              span {
+                text-align: right;
+                width: 100%;
+                height: 50%;
+                align-self: flex-start;
+              }
+              .product-price {
+                widows: 100%;
+                height: 50%;
+                align-self: flex-end;
+              }
+            }
+          }
+        }
+        .remove-from-cart {
+          font-size: 12px;
+          float: left;
+          &:hover {
+            color: $link-default;
+          }
+        }
+        @include tablet {
+          font-size: 14px;
+        }
+        @include mobile {
+          font-size: 16px;
+        }
+        @include small-mobile{
+          width: 100%;
+          margin-bottom: 20px;
+        }
+      }
+      img {
+        max-width: 50%;
+        @include small-mobile{
+          max-width: 80%;
+        }
+      }
+    }
+    @include tablet{
+      padding: 25px 0;
+    }
+  }
+  .checkout-button {
+    width: 100%;
+    font-size: 14px;
+    .call-to-action {
+      float: right;
+      color: white;
+    }
+  }
+}

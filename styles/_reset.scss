@@ -1,0 +1,84 @@
+// Global Components
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @include sans-serif-font;
+  font-size: 16px;
+  color:#282828;
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+  @include mobile {
+    font-size: 15px;
+  }
+}
+
+hr {
+  border-color: $theme-primary;
+  border-width: 3px;
+  max-width: 50px;
+}
+
+a {
+  @include transition-all;
+  color: $text-default;
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin:0 0 20px;
+  padding:0;
+  font-weight:700;
+  @include sans-serif-regular;
+}
+
+p {
+  @include sans-serif-font;
+  padding-bottom: 25px;
+  margin: 0;
+  line-height: 30px;
+}
+
+.container {
+  max-width:800px;
+  margin: 0 auto;
+}
+
+img {
+  max-width:100%;
+  height:auto;
+}
+
+strong {
+  @include sans-serif-bold;
+}
+
+//Footer
+footer {
+  .footer-col {
+    margin-bottom: 20px;
+  }
+  .footer-below {
+    padding: 25px 0;
+    background: $theme-lighter;
+    font-size: 16px;
+  }
+}
+
+button {
+  @include transition-all;
+  @include sans-serif-font;
+  color: white;
+  font-size: 14px;
+  background-color: $button-default;
+  @include border-radius(4px);
+  border: 0.5px solid $gray-base;
+  &:hover {
+    background-color: $button-light
+  }
+}
