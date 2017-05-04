@@ -28,12 +28,10 @@ export function getCartList() {
 }
 
 export function removeFromCart(itemId) {
-  const url = `api/remove?${itemId}`;
-  console.log('remove url', url);
+  const url = `http://localhost:3000/api/remove?${itemId}`;
   const request = axios.post(url);
   return (dispath) => {
     request.then(({ data }) => {
-      console.log(data);
       dispath({ type: ADD_ITEM_TO_INVENTORY, payload: data });
     }).then(() => {
       dispatch({ type: REMOVE_ITEM_FROM_CART, payload: itemId });
@@ -43,14 +41,11 @@ export function removeFromCart(itemId) {
 
 export function addToCart(itemId) {
   const url = `http://localhost:3000/api/add?${itemId}`;
-  console.log('add url', url);
   const request = axios.post(url);
   return (dispath) => {
     request.then(({ data }) => {
-      console.log('data in addtocart:', data);
       dispath({ type: ADD_ITEM_TO_CART, payload: data });
     }).then(() => {
-      console.log('in here');
       dispath({ type: REMOVE_ITEM_FROM_INVENTORY, payload: itemId });
     });
   };
