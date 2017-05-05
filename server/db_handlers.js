@@ -9,20 +9,26 @@ handlers = {};
 
 // Initiate Inventory with 10 new items
 handlers.generateInventory = () => {
-  Inventory.remove({}, (error) => {
-    if (error) throw error;
-    const PRODUCT_COUNT = 12;
-    for (let i = 1; i <= PRODUCT_COUNT; i++) {
-      const product = {
-        _id: faker.random.uuid(),
-        name: faker.commerce.productName(),
-        price: faker.commerce.price(),
-        image: faker.image.image() + `/${i}`, // designate a unique image to each item
-        description: faker.lorem.sentence(),
-      };
-      const newProduct = new Inventory(product);
-      newProduct.save((err) => {
-        if (err) throw err;
+  Inventory.find({}).count({}, (err, count) => {
+    if (err) throw err;
+    console.log('there are %d items', count);
+    if (count !== 12) {
+      Inventory.remove({}, (error) => {
+        if (error) throw error;
+        const PRODUCT_COUNT = 12;
+        for (let i = 1; i <= PRODUCT_COUNT; i++) {
+          const product = {
+            _id: faker.random.uuid(),
+            name: faker.commerce.productName(),
+            price: faker.commerce.price(),
+            image: faker.image.image() + `/${i}`, // designate a unique image to each item
+            description: faker.lorem.sentence(),
+          };
+          const newProduct = new Inventory(product);
+          newProduct.save((err) => {
+            if (err) throw err;
+          });
+        }
       });
     }
   });
