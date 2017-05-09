@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'FilmFinder',
+      title: 'QuickCart',
       template: PATHS.app + '/index.html',
     }),
     new webpack.optimize.CommonsChunkPlugin({
