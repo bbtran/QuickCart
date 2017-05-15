@@ -3,6 +3,8 @@ A quick and easy shopping cart for scalable use.
 ## Version 1.0.0
 * QuickCart is a full stack application utilzing a Node.js server along with MongoDB to persist cart data. The current store only contains 12 items with a stock quantity of 1 for each item. Clicking on the item will redirect users to a detailed view. From there users can add items to the cart or remove the items from the cart if they wish. Clicking on the add-to-cart button directly from the products page will remove the item from the list and add it to the cart. Checkout is easy! No payment is needed. Clicking the checkout button will update your products page and will empty the cart simulating a successful purchase.
 
+![QuickCart](images/quickCartGif.gif "QuickCart")
+
 # Tech Stack
 ## Frontend
 * [React](https://facebook.github.io/react/)-[Redux](https://github.com/reactjs/redux) - JS libraries for rendering page views and maintaining state
